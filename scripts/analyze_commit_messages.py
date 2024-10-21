@@ -13,7 +13,7 @@ def analyze_commit_message(message):
     return response.choices[0].text.strip()
 
 # Load your commit data
-with open('scripts/data/commits.json', 'r') as f:
+with open('scripts/data/commit.json', 'r') as f:
     commits = json.load(f)
 
 # Process and analyze each commit message
