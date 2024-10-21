@@ -1,6 +1,6 @@
 # # name: CI Pipeline
 
-# # # This workflow runs on a push, pull request, or a scheduled time (cron job).
+# # # This workflow runs on a push, pull request, or a scheduled time (cron job)
 # # on:
 # #   push:
 # #     branches:
