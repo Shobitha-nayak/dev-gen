@@ -260,8 +260,8 @@ jobs:
       # Step 10: Commit and push the report
       - name: Commit and Push Report
         run: |
-          git add scripts/devops_maturity_report.pdf
-          git add scripts/plot.png           # Ensure path is correct based on your script
+          git add outputs/devops_maturity_report.pdf
+          git add outputs/plot.png           # Ensure path is correct based on your script
           git commit -m "Update DevOps maturity report"
           git push
 
