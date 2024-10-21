@@ -131,8 +131,8 @@ import json
 import os
 
 # Hardcoded GitHub personal access token
-# GITHUB_TOKEN = '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' 
-GITHUB_TOKEN = os.getenv('MY_GITHUB_TOKEN')            # Replace this with your actual token
+GITHUB_TOKEN = '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' 
+# GITHUB_TOKEN = os.getenv('MY_GITHUB_TOKEN')            # Replace this with your actual token
 GITHUB_REPO = 'Shobitha-nayak/dev-gen'
 
 headers = {
