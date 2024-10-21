@@ -1,6 +1,69 @@
+# # # name: CI Pipeline
+
+# # # # This workflow runs on a push, pull request, or a scheduled time (cron job)
+# # # on:
+# # #   push:
+# # #     branches:
+# # #       - main
+# # #   pull_request:
+# # #     branches:
+# # #       - main
+# # #   schedule:
+# # #     - cron: "0 0 * * *"  # Runs daily at midnight UTC
+
+# # # jobs:
+# # #   build:
+# # #     runs-on: ubuntu-latest
+
+# # #     steps:
+# # #       # Step 1: Checkout the repository
+# # #       - name: Checkout Code
+# # #         uses: actions/checkout@v2
+
+# # #       # Step 2: Set up Python environment
+# # #       - name: Set up Python 3.x
+# # #         uses: actions/setup-python@v2
+# # #         with:
+# # #           python-version: '3.x'
+
+# # #       # Step 3: Install dependencies (adjust based on your project requirements)
+# # #       - name: Install Dependencies
+# # #         run: |
+# # #           python -m pip install --upgrade pip
+# # #           pip install requests scikit-learn openai pdfkit matplotlib
+
+# # #       # Step 4: Collect GitHub Commit and Pull Request Data
+# # #       - name: Collect Commit and PR Data
+# # #         run: |
+# # #           python collect_vcs_data.py
+
+# # #       # Step 5: Run tests (add your test commands if applicable)
+# # #       - name: Run Tests
+# # #         run: |
+# # #           echo "Run your test scripts here (e.g., pytest or npm run test)"
+
+# # #       # Step 6: Analyze Data with ML and LLM (like GPT-4)
+# # #       - name: Analyze Data
+# # #         run: |
+# # #           python analyze_vcs_data.py
+
+# # #       # Step 7: Generate DevOps Maturity Report
+# # #       - name: Generate Report
+# # #         run: |
+# # #           python generate_report.py
+
+# # #       # Step 8: Upload the report as an artifact
+# # #       - name: Upload DevOps Maturity Report
+# # #         uses: actions/upload-artifact@v2
+# # #         with:
+# # #           name: devops-report
+# # #           path: devops_maturity_report.pdf
+
+
+
+
 # # name: CI Pipeline
 
-# # # This workflow runs on a push, pull request, or a scheduled time (cron job)
 # # on:
 # #   push:
 # #     branches:
@@ -9,58 +72,55 @@
 # #     branches:
 # #       - main
 # #   schedule:
-# #     - cron: "0 0 * * *"  # Runs daily at midnight UTC
+# #     - cron: "0 0 * * *"
 
 # # jobs:
 # #   build:
-# #     runs-on: ubuntu-latest
+# #     runs-on: ubuntu-22.04 # Use specific runner version as per your setup
 
 # #     steps:
-# #       # Step 1: Checkout the repository
+# #       # Step 1: Checkout the repository (use the latest version)
 # #       - name: Checkout Code
-# #         uses: actions/checkout@v2
+# #         uses: actions/checkout@v3
 
-# #       # Step 2: Set up Python environment
+# #       # Step 2: Set up Python environment (use the latest version)
 # #       - name: Set up Python 3.x
-# #         uses: actions/setup-python@v2
+# #         uses: actions/setup-python@v4
 # #         with:
 # #           python-version: '3.x'
 
-# #       # Step 3: Install dependencies (adjust based on your project requirements)
+# #       # Step 3: Install dependencies (modify as needed)
 # #       - name: Install Dependencies
 # #         run: |
 # #           python -m pip install --upgrade pip
 # #           pip install requests scikit-learn openai pdfkit matplotlib
 
-# #       # Step 4: Collect GitHub Commit and Pull Request Data
+# #       # Step 4: Collect GitHub Data (running your Python script)
 # #       - name: Collect Commit and PR Data
 # #         run: |
 # #           python collect_vcs_data.py
 
-# #       # Step 5: Run tests (add your test commands if applicable)
+# #       # Step 5: Run tests (optional, modify based on your tests)
 # #       - name: Run Tests
 # #         run: |
-# #           echo "Run your test scripts here (e.g., pytest or npm run test)"
+# #           echo "Run your test scripts here"
 
-# #       # Step 6: Analyze Data with ML and LLM (like GPT-4)
+# #       # Step 6: Analyze Data (ML & LLM, running another Python script)
 # #       - name: Analyze Data
 # #         run: |
 # #           python analyze_vcs_data.py
 
-# #       # Step 7: Generate DevOps Maturity Report
+# #       # Step 7: Generate DevOps Report (this will generate the PDF)
 # #       - name: Generate Report
 # #         run: |
 # #           python generate_report.py
 
-# #       # Step 8: Upload the report as an artifact
-# #       - name: Upload DevOps Maturity Report
-# #         uses: actions/upload-artifact@v2
+# #       # Step 8: Upload Report as Artifact (upload generated PDF)
+# #       - name: Upload Report
+# #         uses: actions/upload-artifact@v3
 # #         with:
 # #           name: devops-report
 # #           path: devops_maturity_report.pdf
-
-
-
 
 # name: CI Pipeline
 
@@ -72,11 +132,11 @@
 #     branches:
 #       - main
 #   schedule:
-#     - cron: "0 0 * * *"
+#     - cron: "0 0 * * *" # This will trigger the workflow daily at midnight UTC
 
 # jobs:
 #   build:
-#     runs-on: ubuntu-22.04 # Use specific runner version as per your setup
+#     runs-on: ubuntu-22.04 # Use a specific runner version as per your setup
 
 #     steps:
 #       # Step 1: Checkout the repository (use the latest version)
@@ -87,7 +147,13 @@
 #       - name: Set up Python 3.x
 #         uses: actions/setup-python@v4
 #         with:
-#           python-version: '3.x'
+#           python-version: '3.x' # Set your desired Python version here
+
+#       # Step 3: Install wkhtmltopdf
+#       - name: Install wkhtmltopdf
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install -y wkhtmltopdf
 
 #       # Step 3: Install dependencies (modify as needed)
 #       - name: Install Dependencies
@@ -98,29 +164,38 @@
 #       # Step 4: Collect GitHub Data (running your Python script)
 #       - name: Collect Commit and PR Data
 #         run: |
-#           python collect_vcs_data.py
+#           python scripts/collect_vcs_data.py # Adjusted path to point to scripts directory
 
-#       # Step 5: Run tests (optional, modify based on your tests)
-#       - name: Run Tests
-#         run: |
-#           echo "Run your test scripts here"
+#       # # Step 5: Run tests (optional, modify based on your tests)
+#       # - name: Run Tests
+#       #   run: |
+#       #     echo "Run your test scripts here" # Replace this with actual test commands if needed
 
 #       # Step 6: Analyze Data (ML & LLM, running another Python script)
 #       - name: Analyze Data
 #         run: |
-#           python analyze_vcs_data.py
+#           python scripts/analyze_commit_messages.py # Adjusted path to point to scripts directory
 
 #       # Step 7: Generate DevOps Report (this will generate the PDF)
 #       - name: Generate Report
 #         run: |
-#           python generate_report.py
+#           python scripts/generate_report.py # Adjusted path to point to scripts directory
 
 #       # Step 8: Upload Report as Artifact (upload generated PDF)
 #       - name: Upload Report
 #         uses: actions/upload-artifact@v3
 #         with:
 #           name: devops-report
-#           path: devops_maturity_report.pdf
+#           path: devops_maturity_report.pdf # Ensure the report is generated in the root directory
+
+
+
+
+
+
+
+
+
 
 name: CI Pipeline
 
@@ -155,21 +230,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wkhtmltopdf
 
-      # Step 3: Install dependencies (modify as needed)
+      # Step 4: Install dependencies (modify as needed)
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests scikit-learn openai pdfkit matplotlib
 
-      # Step 4: Collect GitHub Data (running your Python script)
+      # Step 5: Collect GitHub Data (running your Python script)
       - name: Collect Commit and PR Data
         run: |
           python scripts/collect_vcs_data.py # Adjusted path to point to scripts directory
-
-      # # Step 5: Run tests (optional, modify based on your tests)
-      # - name: Run Tests
-      #   run: |
-      #     echo "Run your test scripts here" # Replace this with actual test commands if needed
 
       # Step 6: Analyze Data (ML & LLM, running another Python script)
       - name: Analyze Data
@@ -181,9 +251,19 @@ jobs:
         run: |
           python scripts/generate_report.py # Adjusted path to point to scripts directory
 
-      # Step 8: Upload Report as Artifact (upload generated PDF)
+      # Step 8: Commit and Push Report to Repository
+      - name: Commit and Push Report
+        run: |
+          git config --local user.email "your-email@example.com"  # Replace with your email
+          git config --local user.name "GitHub Action"             # Replace with your name
+          git add outputs/devops_maturity_report.pdf  # Ensure path is correct based on your script
+          git commit -m "Update DevOps maturity report"
+          git push
+
+      # Step 9: Upload Report as Artifact (optional, if you still want to keep this)
       - name: Upload Report
         uses: actions/upload-artifact@v3
         with:
           name: devops-report
-          path: devops_maturity_report.pdf # Ensure the report is generated in the root directory
+          path: outputs/devops_maturity_report.pdf # Ensure the report is generated in the outputs directory
+
