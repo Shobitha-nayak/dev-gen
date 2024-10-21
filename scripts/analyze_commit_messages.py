@@ -55,7 +55,6 @@
 
 
 
-
 import openai
 import json
 import os
@@ -63,10 +62,13 @@ import os
 # Use the API key from environment variables
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
+if not openai.api_key:
+    raise ValueError("API key not found. Please set the OPENAI_API_KEY environment variable.")
+
 def analyze_commit_message(message):
     # Adjust the call to match the new API structure
-    response = openai.Completion.create(
-        model="text-davinci-003",  # Use the appropriate model for chat completions
+    response = openai.ChatCompletion.create(  # Use the correct API call
+        model="gpt-3.5-turbo",  # Use the appropriate model for chat completions
         messages=[
             {"role": "user", "content": f"Analyze this commit message: {message}"}
         ],
@@ -95,5 +97,6 @@ with open('scripts/data/commit_analysis.json', 'w') as f:
     json.dump(analyses, f, indent=4)
 
 print("Commit analyses completed and saved.")
+
 
 
