@@ -1,5 +1,6 @@
 name: CI Pipeline
 
+# This workflow runs on a push, pull request, or a scheduled time (cron job).
 on:
   push:
     branches:
@@ -7,6 +8,8 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+    - cron: "0 0 * * *"  # Runs daily at midnight UTC
 
 jobs:
   build:
@@ -23,34 +26,34 @@ jobs:
         with:
           python-version: '3.x'
 
-      # Step 3: Install dependencies (modify as needed)
+      # Step 3: Install dependencies (adjust based on your project requirements)
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests scikit-learn openai pdfkit matplotlib
 
-      # Step 4: Collect GitHub Data
+      # Step 4: Collect GitHub Commit and Pull Request Data
       - name: Collect Commit and PR Data
         run: |
           python collect_vcs_data.py
 
-      # Step 5: Run tests (optional)
+      # Step 5: Run tests (add your test commands if applicable)
       - name: Run Tests
         run: |
-          echo "Run your test scripts here"
+          echo "Run your test scripts here (e.g., pytest or npm run test)"
 
-      # Step 6: Analyze Data (ML & LLM)
+      # Step 6: Analyze Data with ML and LLM (like GPT-4)
       - name: Analyze Data
         run: |
           python analyze_vcs_data.py
 
-      # Step 7: Generate DevOps Report
+      # Step 7: Generate DevOps Maturity Report
       - name: Generate Report
         run: |
           python generate_report.py
 
-      # Step 8: Upload Report as Artifact (Optional)
-      - name: Upload Report
+      # Step 8: Upload the report as an artifact
+      - name: Upload DevOps Maturity Report
         uses: actions/upload-artifact@v2
         with:
           name: devops-report
