@@ -65,8 +65,8 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def analyze_commit_message(message):
     # Adjust the call to match the new API structure
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Use the appropriate model for chat completions
+    response = openai.Completion.create(
+        model="text-davinci-003",  # Use the appropriate model for chat completions
         messages=[
             {"role": "user", "content": f"Analyze this commit message: {message}"}
         ],
