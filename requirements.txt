@@ -3,3 +3,4 @@ openai
 scikit-learn
 matplotlib
 pdfkit
+python-dotenv
