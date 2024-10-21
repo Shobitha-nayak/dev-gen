@@ -259,11 +259,13 @@ jobs:
 
       # Step 10: Commit and push the report
       - name: Commit and Push Report
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git add outputs/devops_maturity_report.pdf
           git add outputs/plot.png           # Ensure path is correct based on your script
           git commit -m "Update DevOps maturity report"
-          git push
+          git push https://$GITHUB_TOKEN@github.com/Shobitha-nayak/dev-gen.git HEAD:main
 
       # Step 9: Upload Report as Artifact (optional, if you still want to keep this)
       - name: Upload Report
