@@ -21,8 +21,8 @@ model = LogisticRegression()
 model.fit(X_train, y_train)
 
 # Save trained model
-import pickle
-with open('models/trained_model.pkl', 'wb') as f:
-    pickle.dump(model, f)
+# import pickle
+# with open('models/trained_model.pkl', 'wb') as f:
+#     pickle.dump(model, f)
 
 print("Model accuracy:", model.score(X_test, y_test))
