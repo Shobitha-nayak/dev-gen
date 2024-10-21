@@ -1,0 +1,5 @@
+requests
+openai
+scikit-learn
+matplotlib
+pdfkit
