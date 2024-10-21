@@ -92,7 +92,7 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")  # Set your token in the environment
+GITHUB_TOKEN = os.getenv("MY_GITHUB_TOKEN")  # Set your token in the environment
 
 def get_commit_data(repo_name):
     headers = {"Authorization": f"Bearer {GITHUB_TOKEN}"}
