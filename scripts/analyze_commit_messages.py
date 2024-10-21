@@ -60,17 +60,19 @@ import openai
 import json
 import os
 
-# Replace with your actual API key
-# openai.api_key = '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'
+# Load the OpenAI API key from the environment variable
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def analyze_commit_message(message):
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=f"Analyze this commit message: {message}",
+    # Create a chat completion request
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # You can also use "gpt-4" if you have access to it
+        messages=[
+            {"role": "user", "content": f"Analyze this commit message: {message}"}
+        ],
         max_tokens=100
     )
-    return response.choices[0].text.strip()
+    return response['choices'][0]['message']['content'].strip()
 
 # Load your commit data
 with open('scripts/data/commits.json', 'r') as f:
