@@ -1,26 +1,26 @@
-import openai
-import json
+# import openai
+# import json
 
-# Replace with your actual API key
-openai.api_key = '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'
+# # Replace with your actual API key
+# openai.api_key = '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'
 
-def analyze_commit_message(message):
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=f"Analyze this commit message: {message}",
-        max_tokens=100
-    )
-    return response.choices[0].text.strip()
+# def analyze_commit_message(message):
+#     response = openai.Completion.create(
+#         model="text-davinci-003",
+#         prompt=f"Analyze this commit message: {message}",
+#         max_tokens=100
+#     )
+#     return response.choices[0].text.strip()
 
-# Load your commit data
-with open('scripts/data/commits.json', 'r') as f:
-    commits = json.load(f)
+# # Load your commit data
+# with open('scripts/data/commits.json', 'r') as f:
+#     commits = json.load(f)
 
-# Process and analyze each commit message
-for commit in commits:
-    message = commit['commit']['message']
-    analysis = analyze_commit_message(message)
-    print(f"Commit: {message}\nAnalysis: {analysis}\n")
+# # Process and analyze each commit message
+# for commit in commits:
+#     message = commit['commit']['message']
+#     analysis = analyze_commit_message(message)
+#     print(f"Commit: {message}\nAnalysis: {analysis}\n")
 
 # import openai
 # import os
@@ -48,3 +48,47 @@ for commit in commits:
 #     # Save insights for report generation
 #     with open('outputs/insights.txt', 'w') as f:
 #         f.write(insights)
+
+
+
+
+
+
+
+
+import openai
+import json
+
+# Replace with your actual API key
+openai.api_key = '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'
+
+def analyze_commit_message(message):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=f"Analyze this commit message: {message}",
+        max_tokens=100
+    )
+    return response.choices[0].text.strip()
+
+# Load your commit data
+with open('scripts/data/commits.json', 'r') as f:
+    commits = json.load(f)
+
+# Prepare a list for analyses
+analyses = []
+
+# Process and analyze each commit message
+for commit in commits:
+    message = commit['commit']['message']
+    analysis = analyze_commit_message(message)
+    analyses.append({
+        'commit_message': message,
+        'analysis': analysis
+    })
+
+# Save the analyses to a JSON file
+with open('scripts/data/commit_analysis.json', 'w') as f:
+    json.dump(analyses, f, indent=4)
+
+print("Commit analyses completed and saved.")
+
