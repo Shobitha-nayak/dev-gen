@@ -234,6 +234,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install --upgrade openai
           pip install requests scikit-learn openai pdfkit matplotlib
 
       # Step 5: Collect GitHub Data (running your Python script)
