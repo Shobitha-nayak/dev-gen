@@ -234,7 +234,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests openai pdfkit matplotlib python-dotenv
+          pip install requests scikit-learn openai pdfkit matplotlib
 
       # Step 5: Collect GitHub Data (running your Python script)
       - name: Collect Commit and PR Data
@@ -266,12 +266,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          git add outputs/commit_data.json
-          git add outputs/build_success_rate.txt
-          git add outputs/insights.txt
+          git add scripts/data/commit_analysis.json
           git add outputs/devops_maturity_report.pdf
           git add outputs/plot.png           # Ensure path is correct based on your script
-          git commit -m "Update report and insights"
+          git commit -m "Update DevOps maturity report and commit analysis"
           git push https://$GITHUB_TOKEN@github.com/Shobitha-nayak/dev-gen.git HEAD:main
 
       # Step 9: Upload Report as Artifact (optional, if you still want to keep this)
