@@ -121,3 +121,56 @@ if __name__ == "__main__":
 #     with open('outputs/build_success_rate.txt', 'w') as f:
 #         f.write(str(build_success_rate))
 
+
+
+
+
+
+import requests
+import json
+import os
+
+# Hardcoded GitHub personal access token
+GITHUB_TOKEN = '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'  # Replace this with your actual token
+GITHUB_REPO = 'Shobitha-nayak/dev-gen'
+
+headers = {
+    "Authorization": f"token {GITHUB_TOKEN}"
+}
+
+def get_commits():
+    url = f'https://api.github.com/repos/{GITHUB_REPO}/commits'
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to fetch commits:", response.status_code, response.text)
+        return []
+
+def get_pull_requests():
+    url = f'https://api.github.com/repos/{GITHUB_REPO}/pulls?state=all'
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to fetch pull requests:", response.status_code, response.text)
+        return []
+
+if __name__ == "__main__":
+    # Fetch data
+    commits = get_commits()
+    prs = get_pull_requests()
+    
+    # Ensure the data directory exists
+    os.makedirs('scripts/data', exist_ok=True)
+
+    # Save the collected data
+    with open('scripts/data/commits.json', 'w') as f:
+        json.dump(commits, f, indent=4)
+
+    with open('scripts/data/prs.json', 'w') as f:
+        json.dump(prs, f, indent=4)
+
+    print("Data collected successfully.")      
+
+
