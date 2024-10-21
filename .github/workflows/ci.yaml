@@ -160,10 +160,10 @@ jobs:
         run: |
           python scripts/collect_vcs_data.py # Adjusted path to point to scripts directory
 
-      # Step 5: Run tests (optional, modify based on your tests)
-      - name: Run Tests
-        run: |
-          echo "Run your test scripts here" # Replace this with actual test commands if needed
+      # # Step 5: Run tests (optional, modify based on your tests)
+      # - name: Run Tests
+      #   run: |
+      #     echo "Run your test scripts here" # Replace this with actual test commands if needed
 
       # Step 6: Analyze Data (ML & LLM, running another Python script)
       - name: Analyze Data
