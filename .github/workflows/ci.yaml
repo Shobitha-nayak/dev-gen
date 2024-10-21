@@ -239,7 +239,7 @@ jobs:
       # Step 5: Collect GitHub Data (running your Python script)
       - name: Collect Commit and PR Data
         env:
-          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          MY_GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           python scripts/collect_vcs_data.py # Adjusted path to point to scripts directory
 
