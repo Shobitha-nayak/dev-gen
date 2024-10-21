@@ -176,10 +176,10 @@ jobs:
         run: |
           python scripts/analyze_commit_messages.py # Adjusted path to point to scripts directory
 
-      # Step 7: Generate DevOps Report (this will generate the PDF)
-      - name: Generate Report
-        run: |
-          python scripts/generate_report.py # Adjusted path to point to scripts directory
+      # # Step 7: Generate DevOps Report (this will generate the PDF)
+      # - name: Generate Report
+      #   run: |
+      #     python scripts/generate_report.py # Adjusted path to point to scripts directory
 
       # Step 8: Upload Report as Artifact (upload generated PDF)
       - name: Upload Report
