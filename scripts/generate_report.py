@@ -225,6 +225,8 @@ html = f'''
 <h1>DevOps Maturity Report</h1>
 <p>Build Success Rate: 90%</p>
 <p>Code Churn vs Test Coverage:</p>
+<p><strong>Test Coverage:</strong> 85%</p>
+<p><strong>Insights:</strong> The team is focusing more on bug fixes in recent sprints.</p>
 <img src="{os.path.abspath(os.path.join(output_dir, 'plot.png'))}" alt="Code Churn vs Test Coverage">
 '''
 
