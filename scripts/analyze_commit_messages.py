@@ -55,36 +55,73 @@
 
 
 
-import time
+# import time
+# import openai
+# import json
+# import os
+
+# # Use the API key from environment variables
+# openai.api_key = os.getenv('OPENAI_API_KEY')
+
+# if not openai.api_key:
+#     raise ValueError("API key not found. Please set the OPENAI_API_KEY environment variable.")
+
+# def analyze_commit_message(message):
+#     while True:  # Loop to retry on rate limit error
+#         try:
+#             response = openai.ChatCompletion.create(
+#                 model="gpt-3.5-turbo",
+#                 messages=[
+#                     {"role": "user", "content": f"Analyze this commit message: {message}"}
+#                 ],
+#                 max_tokens=100
+#             )
+#             return response.choices[0].message['content'].strip()  # Access content correctly
+
+#         except openai.error.RateLimitError:
+#             print("Rate limit exceeded. Retrying in 60 seconds...")
+#             time.sleep(60)  # Wait for 60 seconds before retrying
+
+#         except Exception as e:
+#             print(f"An error occurred: {e}")
+#             break  # Exit loop on other errors
+
+# # Load your commit data
+# with open('scripts/data/commits.json', 'r') as f:
+#     commits = json.load(f)
+
+# # Prepare a list for analyses
+# analyses = []
+
+# # Process and analyze each commit message
+# for commit in commits:
+#     message = commit['commit']['message']
+#     analysis = analyze_commit_message(message)
+#     analyses.append({
+#         'commit_message': message,
+#         'analysis': analysis
+#     })
+
+# # Save the analyses to a JSON file
+# with open('scripts/data/commit_analysis.json', 'w') as f:
+#     json.dump(analyses, f, indent=4)
+
+# print("Commit analyses completed and saved.")
+
+
 import openai
 import json
-import os
 
-# Use the API key from environment variables
-openai.api_key = os.getenv('OPENAI_API_KEY')
-
-if not openai.api_key:
-    raise ValueError("API key not found. Please set the OPENAI_API_KEY environment variable.")
+# Replace with your actual API key
+openai.api_key = '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'
 
 def analyze_commit_message(message):
-    while True:  # Loop to retry on rate limit error
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "user", "content": f"Analyze this commit message: {message}"}
-                ],
-                max_tokens=100
-            )
-            return response.choices[0].message['content'].strip()  # Access content correctly
-
-        except openai.error.RateLimitError:
-            print("Rate limit exceeded. Retrying in 60 seconds...")
-            time.sleep(60)  # Wait for 60 seconds before retrying
-
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            break  # Exit loop on other errors
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=f"Analyze this commit message: {message}",
+        max_tokens=100
+    )
+    return response.choices[0].text.strip()
 
 # Load your commit data
 with open('scripts/data/commits.json', 'r') as f:
@@ -107,6 +144,7 @@ with open('scripts/data/commit_analysis.json', 'w') as f:
     json.dump(analyses, f, indent=4)
 
 print("Commit analyses completed and saved.")
+
 
 
 
