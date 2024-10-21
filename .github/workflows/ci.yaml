@@ -168,7 +168,7 @@ jobs:
       # Step 6: Analyze Data (ML & LLM, running another Python script)
       - name: Analyze Data
         run: |
-          python scripts/analyze_vcs_data.py # Adjusted path to point to scripts directory
+          python scripts/analyze_commit_messages.py # Adjusted path to point to scripts directory
 
       # Step 7: Generate DevOps Report (this will generate the PDF)
       - name: Generate Report
