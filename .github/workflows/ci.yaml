@@ -254,8 +254,8 @@ jobs:
       # Step 8: Commit and Push Report to Repository
       - name: Commit and Push Report
         run: |
-          git config --local user.email "your-email@example.com"  # Replace with your email
-          git config --local user.name "GitHub Action"             # Replace with your name
+          git config --local user.email "shobithanayak2405.com"  # Replace with your email
+          git config --local user.Shobitha "GitHub Action"             # Replace with your name
           git add outputs/devops_maturity_report.pdf  # Ensure path is correct based on your script
           git commit -m "Update DevOps maturity report"
           git push
