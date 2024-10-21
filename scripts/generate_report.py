@@ -129,31 +129,72 @@
 
 
 
+# import pdfkit
+# import matplotlib.pyplot as plt
+# import os
+
+# # Generate a plot for report
+# data = {
+#     'code_churn': [100, 50, 200, 30],
+#     'test_coverage': [80, 90, 70, 60]
+# }
+# plt.scatter(data['code_churn'], data['test_coverage'])
+# plt.title("Code Churn vs Test Coverage")
+# plt.xlabel("Code Churn")
+# plt.ylabel("Test Coverage")
+# plt.savefig('plot.png')
+# plt.close()  # Close the plot to free up memory
+
+# # Generate a simple HTML report
+# html = f'''
+# <h1>DevOps Maturity Report</h1>
+# <p>Build Success Rate: 90%</p>
+# <p>Code Churn vs Test Coverage:</p>
+# <img src="{os.path.abspath('plot.png')}">
+# '''
+
+# # Convert HTML to PDF
+# pdfkit.from_string(html, 'devops_maturity_report.pdf')
+
+
+
+
 import pdfkit
 import matplotlib.pyplot as plt
 import os
 
-# Generate a plot for report
+# Generate a plot for the report
 data = {
     'code_churn': [100, 50, 200, 30],
     'test_coverage': [80, 90, 70, 60]
 }
+
+# Create a scatter plot
 plt.scatter(data['code_churn'], data['test_coverage'])
 plt.title("Code Churn vs Test Coverage")
 plt.xlabel("Code Churn")
 plt.ylabel("Test Coverage")
-plt.savefig('plot.png')
-plt.close()  # Close the plot to free up memory
+plt.savefig('plot.png')  # Save the plot as a PNG file
+plt.close()  # Close the plot to avoid display
 
 # Generate a simple HTML report
 html = f'''
 <h1>DevOps Maturity Report</h1>
 <p>Build Success Rate: 90%</p>
 <p>Code Churn vs Test Coverage:</p>
-<img src="{os.path.abspath('plot.png')}">
+<img src="{os.path.abspath('plot.png')}" alt="Code Churn vs Test Coverage">
 '''
 
+# Print HTML content for debugging
+print("Generated HTML for report:")
+print(html)
+
 # Convert HTML to PDF
-pdfkit.from_string(html, 'devops_maturity_report.pdf')
+try:
+    pdfkit.from_string(html, 'devops_maturity_report.pdf')
+    print("PDF generated successfully!")
+except Exception as e:
+    print(f"Error generating PDF: {e}")
+
 
 
