@@ -300,56 +300,118 @@
 
 
 
+# import pdfkit
+# import matplotlib.pyplot as plt
+# import os
+# import json
+
+# # Ensure output directory exists
+# output_dir = 'outputs'
+# os.makedirs(output_dir, exist_ok=True)
+
+# # Load the commit analysis data
+# with open('scripts/data/commit_analysis.json', 'r') as f:
+#     analyses = json.load(f)
+
+# # Calculate insights
+# total_commits = len(analyses)
+# insight_summary = "\n".join(f"Commit: {a['commit_message']}\nAnalysis: {a['analysis']}" for a in analyses)
+
+# # Dummy data for plotting (in a real scenario, replace this with actual data)
+# code_churn = [100, 50, 200, 30]  # This should be calculated from commit data
+# test_coverage = [80, 90, 70, 60]  # This could be fetched from a testing tool
+
+# # Create a scatter plot
+# plt.scatter(code_churn, test_coverage)
+# plt.title("Code Churn vs Test Coverage")
+# plt.xlabel("Code Churn")
+# plt.ylabel("Test Coverage")
+# plt.savefig(os.path.join(output_dir, 'plot.png'))  # Save in outputs directory
+# plt.close()  # Close the plot to avoid display
+
+# # Generate a simple HTML report
+# html = f'''
+# <h1>DevOps Maturity Report</h1>
+# <p>Build Success Rate: 90%</p>
+# <p>Code Churn vs Test Coverage:</p>
+# <p><strong>Test Coverage:</strong> 85%</p>
+# <p><strong>Insights from Commit Analyses:The majority of commits are feature additions.</strong></p>
+# <pre>{insight_summary}</pre>
+# <img src="{os.path.abspath(os.path.join(output_dir, 'plot.png'))}" alt="Code Churn vs Test Coverage">
+# '''
+
+# # Print HTML content for debugging
+# print("Generated HTML for report:")
+# print(html)
+
+# # Convert HTML to PDF
+# try:
+#     pdfkit.from_string(html, os.path.join(output_dir, 'devops_maturity_report.pdf'))  # Save PDF in outputs directory
+#     print("PDF generated successfully!")
+# except Exception as e:
+#     print(f"Error generating PDF: {e}")
+
+
+
+
 import pdfkit
 import matplotlib.pyplot as plt
 import os
 import json
+from git import Repo
 
 # Ensure output directory exists
 output_dir = 'outputs'
 os.makedirs(output_dir, exist_ok=True)
 
-# Load the commit analysis data
+# Load commit analysis data
 with open('scripts/data/commit_analysis.json', 'r') as f:
     analyses = json.load(f)
 
-# Calculate insights
+# Calculate insights from commit analyses
 total_commits = len(analyses)
 insight_summary = "\n".join(f"Commit: {a['commit_message']}\nAnalysis: {a['analysis']}" for a in analyses)
 
-# Dummy data for plotting (in a real scenario, replace this with actual data)
-code_churn = [100, 50, 200, 30]  # This should be calculated from commit data
-test_coverage = [80, 90, 70, 60]  # This could be fetched from a testing tool
+# Collect code churn data from Git
+repo = Repo('https://github.com/Shobitha-nayak/dev-gen')
+code_churn_data = [commit.stats.total['insertions'] + commit.stats.total['deletions'] for commit in repo.iter_commits()]
+total_code_churn = sum(code_churn_data)
+
+# Collect test coverage data
+with open('coverage.json') as f:
+    coverage_data = json.load(f)
+test_coverage = coverage_data['totals']['percent_covered']
 
 # Create a scatter plot
-plt.scatter(code_churn, test_coverage)
+plt.scatter(code_churn_data, [test_coverage] * len(code_churn_data))  # Adjust as needed for multiple coverage points
 plt.title("Code Churn vs Test Coverage")
 plt.xlabel("Code Churn")
 plt.ylabel("Test Coverage")
-plt.savefig(os.path.join(output_dir, 'plot.png'))  # Save in outputs directory
-plt.close()  # Close the plot to avoid display
+plt.savefig(os.path.join(output_dir, 'plot.png'))
+plt.close()
 
-# Generate a simple HTML report
+# Generate HTML report
 html = f'''
 <h1>DevOps Maturity Report</h1>
 <p>Build Success Rate: 90%</p>
 <p>Code Churn vs Test Coverage:</p>
-<p><strong>Test Coverage:</strong> 85%</p>
-<p><strong>Insights from Commit Analyses:The majority of commits are feature additions.</strong></p>
+<p><strong>Test Coverage:</strong> {test_coverage}%</p>
+<p><strong>Insights from Commit Analyses:</strong></p>
 <pre>{insight_summary}</pre>
 <img src="{os.path.abspath(os.path.join(output_dir, 'plot.png'))}" alt="Code Churn vs Test Coverage">
 '''
 
-# Print HTML content for debugging
+# Print HTML for debugging
 print("Generated HTML for report:")
 print(html)
 
 # Convert HTML to PDF
 try:
-    pdfkit.from_string(html, os.path.join(output_dir, 'devops_maturity_report.pdf'))  # Save PDF in outputs directory
+    pdfkit.from_string(html, os.path.join(output_dir, 'devops_maturity_report.pdf'))
     print("PDF generated successfully!")
 except Exception as e:
     print(f"Error generating PDF: {e}")
+
 
 
 
