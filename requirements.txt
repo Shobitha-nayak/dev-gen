@@ -4,3 +4,4 @@ scikit-learn
 matplotlib
 pdfkit
 python-dotenv
+GitPython>=3.1.0
