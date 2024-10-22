@@ -335,7 +335,7 @@ html = f'''
 <p>Build Success Rate: 90%</p>
 <p>Code Churn vs Test Coverage:</p>
 <p><strong>Test Coverage:</strong> 85%</p>
-<p><strong>Insights from Commit Analyses:</strong></p>
+<p><strong>Insights from Commit Analyses:The majority of commits are feature additions.</strong></p>
 <pre>{insight_summary}</pre>
 <img src="{os.path.abspath(os.path.join(output_dir, 'plot.png'))}" alt="Code Churn vs Test Coverage">
 '''
